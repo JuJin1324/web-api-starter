@@ -1,18 +1,6 @@
 # web-api-starter
 
-## REST API
-### 개요
-> TODO
-
-### Microsoft web API design
-> TODO
-
----
-
 ## JSON
-### 개요
-> TODO
-
 ### Google JSON Style Guide
 > Comments: JSON 에 주석은 사용하지 않는다.  
 > Double Quotes: 따옴표가 아닌 쌍따옴표를 사용한다.  
