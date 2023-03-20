@@ -1,11 +1,5 @@
 # web-api-starter
 
-## REST API
-### Microsoft web API design
-> TODO
-
----
-
 ## JSON
 ### Google JSON Style Guide
 > Comments: JSON 에 주석은 사용하지 않는다.  
