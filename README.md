@@ -112,18 +112,27 @@
 
 ---
 
-## Java API - JSON Web Token
-### build.gradle
-> ```groovy
-> ...
-> dependencies {
->   ...
->   implementation 'io.jsonwebtoken:jjwt:0.9.1'
-> }
-> ...
-> ```
+## Json Web Token(JWT)
+### Header
+> TODO
 
-### JsonWebTokenProvider
+### Payload
+> TODO
+
+### Signature
+> TODO
+
+### Claims
+> TODO
+
+### Subject
+> TODO
+
+### Signing key
+> TODO
+
+### 참조사이트
+> []()
 
 ---
 
