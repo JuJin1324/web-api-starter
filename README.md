@@ -113,26 +113,50 @@
 ---
 
 ## Json Web Token(JWT)
+### 개요
+> JWT 는 유저를 인증하고 식별하기 위한 토큰(Token)기반 인증이다. RFC 7519 에 자세한 명세가 나와있다.  
+> JWT 를 사용하면 RESTful 과 같은 무상태(Stateless)인 환경에서 사용자 데이터를 주고 받을 수 있게된다.  
+> JWT는 Header, Payload, Signature 로 구성된다. 또한 각 요소는 . 으로 구분된다.  
+
 ### Header
-> TODO
+> JWT 에서 사용할 타입과 해시 알고리즘 종류가 담겨있다.   
+> 타입은 "JWT" 로 고정이다.  
+> 알고리즘은 보통 "HS256" 혹은 "RSA" 가 사용된다.  
 
 ### Payload
-> TODO
+> 서버에서 첨부한 사용자 권한 정보 및 데이터가 담겨있다.   
+> 데이터는 Claims 에 저장한다. 
 
 ### Signature
-> TODO
+> 개인키로 서명한 전자서명이 담겨있다. 
+> 비대칭키를 통해서 개인키로 서명하게 되면 공개키를 통해 검증을 거치게 된다. 
+> 서명은 헤더의 인코딩값과, 정보의 인코딩값을 합친후 주어진 비밀키로 해쉬를 하여 생성합니다.
 
 ### Claims
-> TODO
-
-### Subject
-> TODO
-
-### Signing key
-> TODO
+> **등록된 클레임(Reserved claims)**  
+> 이미 예약된 Claim으로 필수는 아니지만 사용하길 권장된다.  
+> `iss`: 발급자(issuer)  
+> `sub`: 제목(subject)  
+> `aud`: 대상자(audience)  
+> `exp`: 만료시간(expiration), 밀리초 형식  
+> `iat`: 발급시간(issued at), 밀리초 형식    
+> `jti`: 고유 식별자, 중복처리 방지를 위해 사용되며 일회용 토큰에 사용하면 유용.  
+> `nbf`: Not Before. 활성 날짜. 현재 시간이 nbf 로 지정한 시간을 지나지 않으면 유효하지 않음을 설정, 밀리초 형식    
+> 
+> **공개 클레임(Public claims)**  
+> 공개 클레임들은 충돌이 방지된 (collision-resistant) 이름을 가지고 있어야 한다. 
+> 충돌을 방지하기 위해서는, 클레임 이름을 URI 형식으로 짓는다.  
+> ex: `{ "https://velopert.com/jwt_claims/is_admin": true }`  
+> 
+> **비공개 클레임(Private claims)**  
+> 등록된 클레임도아니고, 공개된 클레임들도 아니다. 
+> 양 측간에 (보통 클라이언트 <->서버) 협의하에 사용되는 클레임 이름들이다. 
+> 공개 클레임과는 달리 이름이 중복되어 충돌이 될 수 있으니 사용할 때에 유의해야합니다.
 
 ### 참조사이트
-> []()
+> [JWT(JSON Web Token)의 개념부터 구현까지 알아보기](https://pronist.dev/143)
+> [JWT(JSON Web Token) - 김종근](https://velog.io/@sproutt/JWTJSON-Web-Token-%EA%B9%80%EC%A2%85%EA%B7%BC)
+> [[JWT] JSON Web Token 소개 및 구조](https://velopert.com/2389)
 
 ---
 
