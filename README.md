@@ -161,8 +161,25 @@
 ---
 
 ## CORS
-### TODO
-> TODO
+### Cross-Origin Resource Sharing
+> 교차 출처 리소스 공유  
+> Cross 는 다른 출처라고 해석한다.  
+> Origin 은 출처를 의미하며 출처란 protocol(https/http), host(www.google.com 등), port(443, 80 등) 을 합친 것이다.  
+> 출처를 비교하는 로직은 서버에 구현되어 있는 것이 아닌 웹 브라우저(클라이언트)에 구현되어 있는 스펙이다.  
+
+### SOP  
+> Same-Origin Policy 는 말 그대로 같은 출처에서만 리소스를 공유할 수 있다는 규칙을 가진 정책이다.
+
+### CORS 동작
+> 브라우저는 요청 헤더에 `Origin` 이라는 필드에 요청을 보내는 출처를 함께 담아보낸다.  
+> 이후 서버가 이 요청에 대한 응답을 할 때 응답 헤더의 `Access-Control-Allow-Origin` 이라는 값에 "이 리소스를 접근하는 것이 허용된 출처"를 내려주고,
+> 이후 응답을 받은 브라우저는 자신이 보냈던 요청의 Origin 과 서버가 보내준 응답의 Access-Control-Allow-Origin 을 비교해본 후 이 응답이 유효한 응답인지 아닌지를 결정한다. 
+
+### 서버 셋팅
+> 서버에서는 `Access-Control-Allow-Origin` 의 값을 설정한다.  
+> 만약 서버가 모든 사용자에게 오픈된 API 를 제공하는 경우 `Access-Control-Allow-Origin` 의 값은 `*` 로 모든 출처를 허용하는 와일드카드를 설정한다.  
+> 만약 서버가 특정 도메인에서만 사용되는 API 인 경우 `Access-Control-Allow-Origin` 의 값은 특정 도메인과 와일드카드(*)를 적절히 섞어서 설정한다.  
+> 안드로이드의 경우 웹 앱을 통한 서버 호출인 경우가 아니라면 CORS 를 확인하지 않기 때문에 CORS 설정이 무의미할 수 있다.     
 
 ---
 
