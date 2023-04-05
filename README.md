@@ -6,17 +6,17 @@
 > Double Quotes: 따옴표가 아닌 쌍따옴표를 사용한다.  
 > Flattened data: 내장 객체의 경우 편의를 위한 객체 사용이 아닌 관련된 정보를 묶어서 객체로 사용한다.  
 > 
-> Property Name Format  
+> **Property Name Format**  
 > 1.semantic 한 이름으로 사용한다.  
 > 2.camel-case 를 사용한다.  
 > 3.첫글자는 문자로 시작해야하며, _(underscore) 혹은 $ 를 첫글자로 사용하지 않는다.  
 > 4.Javascript 예약어는 사용하지 않는다.  
 > 
-> Singular vs Plural Property Names  
+> **Singular vs Plural Property Names**  
 > 기본적으로 Property name 은 단수형으로 사용한다.    
 > 배열, 맵 형태인 경우 복수형으로 사용한다.  
 > 
-> Naming Conflicts  
+> **Naming Conflicts**  
 > 기존에 사용하고 있는 Property 의 자료형이 다음 버전에서 변경되는 경우 `apiVersion` 프로퍼티를 통해서 구분한다.
 > ex)    
 > ```JSON
@@ -26,7 +26,7 @@
 >   "isPublic": "N" 
 > }
 > 
-> 신규 버전에서 isPublic 이 boolean 으로 값이 변경되는 경우
+> // 신규 버전에서 isPublic 이 boolean 으로 값이 변경되는 경우
 > { 
 >   "apiVersion": "2.0",
 >   "isPublic": false 
@@ -57,17 +57,17 @@
 
 ## Stateless Token 을 통한 인증
 ### JWT
-> 특징  
+> **특징**  
 > JWT는 Claim 기반이라는 방식을 사용하는데, Claim은 사용자에 대한 프로퍼티나 속성을 말한다.
 >
-> 장점  
+> **장점**  
 > 1.이 토큰을 이용해서 요청을 받는 서버나 서비스 입장에서는 이 서비스를 호출한 사용자에 대한 추가 정보는 이미 토큰 안에 다 들어가 있기 때문에, 다른 곳에서 가져올 필요가 없다는 장점이 있다.  
 > 2.토큰을 생성하는 단계에서는 생성된 토큰을 별도로 서버에서 유지할 필요가 없으며,
 > 토큰을 사용하는 API 서버 입장에서는 API 요청을 검증하기 위해서 토큰을 가지고 사용자 정보를 별도로 계정 시스템 등에서 조회할 필요가 없다는 것이다.  
 > 3.Claim 기반의 토큰은 토큰 자체가 정보를 담음으로써 토큰으로 서비스나 API 접근을 제어할 때, 별도의 작업이 서버에서 필요하지 않으며,
 > 토큰 자체를 서버에서 관리할 필요가 없어서 구현이 상대적으로 단순해진다.
 >
-> 단점  
+> **단점**  
 > 한번 발급된 토큰은 값을 수정하거나 폐기가 불가 : JWT는 토큰 내에 모든 정보를 다 가지고 있기 때문에 한 번 발급된 토큰에 대한 변경은 서버에서는
 > 더는 불가능하다. 예를 들어서, 토큰을 잘못 발행해서 삭제하고 싶더라도 서명만 맞으면 맞는 토큰으로 인식하기 때문에 서버에서는 한번 발급된 토큰의 정보를 바꾸는 일이 불가능하다.
 
@@ -86,13 +86,13 @@
 >
 > **형태**  
 > refresh token 을 JWT 로 구현할 수도 있고 UUID 로 구현할 수도 있다. 각각의 특징은 다음과 같다.  
-> refresh token dmf JWT 로 구현할 경우 토큰 자체에 데이터를 담을 수 있으며, token 의 유효성을 검증하기 위해 DB 에 엑세스할 필요가 없다.
+> refresh token 을 JWT 로 구현할 경우 토큰 자체에 데이터를 담을 수 있으며, token 의 유효성을 검증하기 위해 DB 에 엑세스할 필요가 없다.
 > 따라서 서버의 부하가 상대적으로 적다.  
 > 하지만 access token 과 마찬가지로 refresh token 을 서버에서 제어할 수 없다. 즉 refresh token 을 탈취당했을 때 해당 token 을 무효화 시킬 방법이 없다.
 >
 > refresh token 을 UUID 혹은 random string 으로 구현할 경우 그 토큰을 사용자와 맵핑 되도록 DB 저장해야한다.
 > 이런 경우 refresh token 유효성 검증시 DB 에 엑세스가 필요하다. 하지만 비정상 동작이 의심되는 사용자를 강제로 로그아웃 시키거나 차단이 가능해진다.
-> 또한 JWT 에서는 불가능한 refresh token 탈취기 해당 token 을 즉시 무효화 시킬 수 있다.
+> 또한 refresh token 탈취 시 해당 token 을 즉시 무효화 시킬 수 있다(이는 JWT 를 사용한 refresh token 에서는 불가능하다).
 >
 > **한계**  
 > refresh token 으로 인하여 access token 의 유효기간을 짧게 가져갈 수 있지만, 탈취된 access token 이 유효한 그 짧은 시간 동안에 악용되는 것을 막을 수는 없다.  
@@ -157,12 +157,6 @@
 > [JWT(JSON Web Token)의 개념부터 구현까지 알아보기](https://pronist.dev/143)
 > [JWT(JSON Web Token) - 김종근](https://velog.io/@sproutt/JWTJSON-Web-Token-%EA%B9%80%EC%A2%85%EA%B7%BC)
 > [[JWT] JSON Web Token 소개 및 구조](https://velopert.com/2389)
-
----
-
-## CORS
-### TODO
-> TODO
 
 ---
 
