@@ -35,14 +35,23 @@
 > 
 > Property Value Format: null, boolean, number, string, object, array 만 허용  
 > Enum value: Java 의 Enum value 를 JSON 에서 표현할 시 string 으로 모든 글자를 대문자로 표시  
-> Date value: Date 는 RFC 3339 포맷을 따른 문자열로 표시한다.  
-> ex) `{ "lastUpdate": "2023-03-14T16:33:43.000Z" }`  
+> Date value: Date 는 RFC 3339 포맷을 따른 문자열로 표시한다.   
+> 날짜 포멧: `YYYY-MM-DDThh:mm:ss.sssZ`  
+> RFC 3339 는 날짜와 시간 사이에 'T' 를 넣는 것과 ' ' 공백을 넣는 것 모두 허용한다.  
+> ```json
+> // UTC 타임존을 나타낼 때는 마지막에 Z 로 표시한다.
+> { "lastUpdateUTC": "2023-03-14T16:33:43.000Z" }
+> 
+> // KST 타임존을 나타낼 때는 마지막에 +09:00 로 표시한다.
+> { "lastUpdateKST": "2023-03-15T01:33:43.000+09:00" }
+> ```  
 > 
 > Latitude/Longitude Property Values: Latitude/Longitude 는 ISO 6709 포맷을 따른 `±DD.DDDD±DDD.DDDD` 형태의 문자열로 표시한다.  
 > ex) `{ "companyLocation": "+37.5386+126.9474" }`  
 
 ### 참고사이트
 > [Google JSON Style Guide](https://google.github.io/styleguide/jsoncstyleguide.xml?showone=Property_Name_Format#Property_Name_Format)
+> [[Spring Boot] DateTime 다뤄보기](https://devonce.tistory.com/50)
 
 ---
 
@@ -157,9 +166,9 @@
 > 공개 클레임과는 달리 이름이 중복되어 충돌이 될 수 있으니 사용할 때에 유의해야합니다.
 
 ### 참조사이트
-> [JWT(JSON Web Token)의 개념부터 구현까지 알아보기](https://pronist.dev/143)
-> [JWT(JSON Web Token) - 김종근](https://velog.io/@sproutt/JWTJSON-Web-Token-%EA%B9%80%EC%A2%85%EA%B7%BC)
-> [[JWT] JSON Web Token 소개 및 구조](https://velopert.com/2389)
+> [JWT(JSON Web Token)의 개념부터 구현까지 알아보기](https://pronist.dev/143)  
+> [JWT(JSON Web Token) - 김종근](https://velog.io/@sproutt/JWTJSON-Web-Token-%EA%B9%80%EC%A2%85%EA%B7%BC)  
+> [[JWT] JSON Web Token 소개 및 구조](https://velopert.com/2389)  
 
 ---
 
