@@ -1,72 +1,5 @@
 # web-api-starter
 
-## JSON
-### Google JSON Style Guide
-> Comments: JSON 에 주석은 사용하지 않는다.  
-> Double Quotes: 따옴표가 아닌 쌍따옴표를 사용한다.  
-> Flattened data: 내장 객체의 경우 편의를 위한 객체 사용이 아닌 관련된 정보를 묶어서 객체로 사용한다.  
-> 
-> **Property Name Format**  
-> 1.semantic 한 이름으로 사용한다.  
-> 2.camel-case 를 사용한다.  
-> 3.첫글자는 문자로 시작해야하며, _(underscore) 혹은 $ 를 첫글자로 사용하지 않는다.  
-> 4.Javascript 예약어는 사용하지 않는다.  
-> 
-> **Singular vs Plural Property Names**  
-> 기본적으로 Property name 은 단수형으로 사용한다.    
-> 배열, 맵 형태인 경우 복수형으로 사용한다.  
-> 
-> **Naming Conflicts**  
-> 기존에 사용하고 있는 Property 의 자료형이 다음 버전에서 변경되는 경우 `apiVersion` 프로퍼티를 통해서 구분한다.
-> ex)    
-> ```JSON
-> // 기존 isPublic 이 'Y', 'N' 값으로 사용된 경우 
-> { 
->   "apiVersion": "1.0",
->   "isPublic": "N" 
-> }
-> 
-> // 신규 버전에서 isPublic 이 boolean 으로 값이 변경되는 경우
-> { 
->   "apiVersion": "2.0",
->   "isPublic": false 
-> }
-> ```
-> 
-> Property Value Format: null, boolean, number, string, object, array 만 허용  
-> Enum value: Java 의 Enum value 를 JSON 에서 표현할 시 string 으로 모든 글자를 대문자로 표시  
-> Date value: Date 는 RFC 3339 포맷을 따른 문자열로 표시한다.   
-> 날짜 포멧: `YYYY-MM-DDThh:mm:ss.sssZ`  
-> RFC 3339 는 날짜와 시간 사이에 'T' 를 넣는 것과 ' ' 공백을 넣는 것 모두 허용한다.  
-> ```json
-> // UTC 타임존을 나타낼 때는 마지막에 Z 로 표시한다.
-> { "lastUpdateUTC": "2023-03-14T16:33:43.000Z" }
-> 
-> // KST 타임존을 나타낼 때는 마지막에 +09:00 로 표시한다.
-> { "lastUpdateKST": "2023-03-15T01:33:43.000+09:00" }
-> ```  
-> 
-> Latitude/Longitude Property Values: Latitude/Longitude 는 ISO 6709 포맷을 따른 `±DD.DDDD±DDD.DDDD` 형태의 문자열로 표시한다.  
-> ex) `{ "companyLocation": "+37.5386+126.9474" }`  
-
-### 참고사이트
-> [Google JSON Style Guide](https://google.github.io/styleguide/jsoncstyleguide.xml?showone=Property_Name_Format#Property_Name_Format)
-> [[Spring Boot] DateTime 다뤄보기](https://devonce.tistory.com/50)
-
----
-
-## API 키를 통한 인증
-### API 키
-> API 키란 특정 사용자만 알 수 있는 일종의 문자열이다.
-
-### 주의점
-> 모든 클라이언트가 같은 API 키를 공유하기 때문에, 한번 API 키가 노출되면 전체 API가 뚫려버리는 문제가 있으므로 높은 보안 인증이 필요할 때에는 권장하지 않는다.
-
-### TODO
-> 
-
----
-
 ## Stateless Token 을 통한 인증
 ### JWT
 > **특징**  
@@ -192,6 +125,60 @@
 > 만약 서버가 모든 사용자에게 오픈된 API 를 제공하는 경우 `Access-Control-Allow-Origin` 의 값은 `*` 로 모든 출처를 허용하는 와일드카드를 설정한다.  
 > 만약 서버가 특정 도메인에서만 사용되는 API 인 경우 `Access-Control-Allow-Origin` 의 값은 특정 도메인과 와일드카드(*)를 적절히 섞어서 설정한다.  
 > 안드로이드의 경우 웹 앱을 통한 서버 호출인 경우가 아니라면 CORS 를 확인하지 않기 때문에 CORS 설정이 무의미할 수 있다.     
+
+---
+
+## TPS(처리량) 와 응답시간
+> 정보시스템의 대표적인 성능 지표는 처리량 (Throughput)과 응답시간 (Response Time)이다.
+
+### 처리량
+> 처리량은 시스템 측면의 대상 시스템에 대한 성능을 평가하는 KPI이며, 단위로는 주로 TPS (Transactions per Second)를 사용한다.
+> 이는, 단위 시간당 대상 시스템에서 처리되고 있는 요청 건수를 의미하며, 일반적으로 처리량을 일컬을 때 각 대상 리소스별로 호칭하는 용어가 별도로 존재한다.  
+> 처리량 단위  
+> CPU : MIPS, MFLOPS  
+> Network : BPS, pps  
+> Server : tpmC  
+> C/S, TP-Monitor, Mainframe : TPS  
+> Storage : IOPS  
+> 
+> TPS (Transactions per Second)  
+> 초당 발생하는 Business Transactions  
+> TPS = 총 Business Transaction 처리건수 / 단위시간 (sec)  
+> 1TPS = 60 TPM = 3600 TPH  
+> 시스템의 주요 성능 Factor  
+
+### 응답시간
+> 응답시간은 사용자 측면에서의 성능을 평가하는 KPI로 주로 사용되며, 사용자가 해당 업무를 요청한 시점부터 서버로부터 
+> 그 결과에 대한 응답을 받아서 사용자 화면에 디스플레이할 때까지 소요된 총시간이다.  
+> 그러므로 다음과 같이 각 리소스별로 소요된 시간의 합으로 나타낼 수 있다.  
+> ```
+> Response Time = Client Time + Network Time + Server Processing/Sending Time
+> ```
+> 응답시간을 소요시간으로 구분하면, 각 리소스 별 소요된 Service time과 각 리소스에서 대기하고 있는 Queuing time의 합으로 구성된다. 
+> Tier 별 구분 시 Client, Network, Web, WAS, DB 시간 등으로 나타낼 수 있다.  
+> 
+> 응답시간 종류  
+> 평균 응답시간 (Avg) : 각 Transaction 별 Response의 평균 응답시간  
+> 
+> 최소 응답시간 (Min) : 각 Transaction 별 Response 중 가장 짧은 응답시간
+> 
+> 최대 응답시간 (Max) : 각 Transaction 별 Response 중 가장 긴 응답시간  
+> 
+> 백분율 응답시간 (50th, 60th, 70th, 80th, 90th ...) : 각 Transaction 별 응답시간을 작은 값에서 가장 큰 값으로 늘어 놓았을 때 각 백분율 순위에 위치하는 응답시간  
+> 주로, 시스템 및 기타 여러 가지 원인으로 인해 순간적으로 왜곡된 10%의 응답시간을 제외한 90th 응답시간과 평균 응답시간을 가장 의미있는 응답시간으로 인정  
+> 
+> 처리량과 응답시간의 상관 관계  
+> 부하가 증가할 수록 (사용자의 요청이 증가할 수록) 어느 수준까지는 처리량이 선형적으로 증가한다. 왜냐하면 서비스 시간이 일정하기 때문이다. 
+> 즉, Little's law에 의해 Response time이 일정한 상태에서 Active user 수가 증가하므로 TPS가 커지게 되는 결과이다.  
+> 그러나, 부하가 계속 증가하더라도 어느 시점에 이르러 처리량이 더이상 증가하지 않고 일정한 수준을 유지하게 되는데, 
+> 이렇게 되는 변곡점을 포화점/임계점 (Saturation point)이라 부른다. 
+> 포화점 이후부터는 대기시간 (Queuing time)이 길어지기 때문에 응답시간이 기하급수적으로 증가하게 되며, 사용자가 증가하더라도 성능이 더 이상 올라가지 않기 때문에 
+> 이 때의 동시 사용자 수를 최대 허용 동시 사용자라고 표현한다. Saturation point는 해당 시스템의 최대 처리량을 나타내는 지점이 된다.  
+> 성능 테스트의 한 형태인 Critical Performance Test (임계 성능 테스트)의 경우, Saturation point를 찾아내는 것을 목표로 한다. 
+> 즉, 해당 시스템의 한계 성능을 확인하기 위함이다. 이로 인해, 최대 TPS와 그 때의 응답시간과 자원사용률, 최대 허용 동시 사용자 수 등을 알 수 있게 된다.  
+
+### 참조사이트
+> [TPS와 응답시간](https://performance.tistory.com/4)
 
 ---
 
